@@ -8,6 +8,7 @@ import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { APP_NAME, APP_TAGLINE } from "@/constants";
 import { useAuth } from "@/contexts/auth-context";
+import api from "@/lib/api";
 
 const HIGHLIGHTS = [
   "Role based access for Admin, Sales, Warehouse and Accounts",
@@ -35,16 +36,10 @@ export function SignupPage() {
     setSubmitting(true);
     setError(null);
     try {
-      const response = await fetch('/api/v1/auth/signup', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, email, password, roleName: role })
-      });
+      const response = await api.post('/auth/signup', { name, email, password, roleName: role });
       
-      const data = await response.json();
-      
-      if (!response.ok || !data.success) {
-        throw new Error(data.message || 'Signup failed');
+      if (!response.data.success) {
+        throw new Error(response.data.message || 'Signup failed');
       }
 
       toast.success("Account created successfully. Please sign in.");
