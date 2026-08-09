@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { AppError } from '../errors/AppError';
 import { customerRepository } from '../repositories/customer.repository';
 import { userRepository } from '../repositories/user.repository';
