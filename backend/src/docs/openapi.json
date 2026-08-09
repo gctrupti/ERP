@@ -1,0 +1,54 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Mini ERP API",
+    "version": "1.0.0",
+    "description": "API documentation for CRM & Products"
+  },
+  "paths": {
+    "/api/v1/customers": {
+      "get": {
+        "summary": "List customers",
+        "tags": ["Customers"],
+        "parameters": [
+          { "name": "page", "in": "query", "schema": { "type": "integer" } },
+          { "name": "limit", "in": "query", "schema": { "type": "integer" } },
+          { "name": "search", "in": "query", "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Successful response" }
+        }
+      },
+      "post": {
+        "summary": "Create customer",
+        "tags": ["Customers"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "mobile": { "type": "string" },
+                  "email": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": { "description": "Customer created" }
+        }
+      }
+    },
+    "/api/v1/products": {
+      "get": {
+        "summary": "List products",
+        "tags": ["Products"],
+        "responses": {
+          "200": { "description": "Successful response" }
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: ./backend
+    ports:
+      - "5000:5000"
+    environment:
+      - PORT=5000
+      - DATABASE_URL=file:./dev.db
+      - JWT_SECRET=your_super_secret_jwt_key_here
+      - NODE_ENV=production
+    volumes:
+      - backend-data:/app/prisma
+
+  frontend:
+    build:
+      context: ./frontend
+    ports:
+      - "3000:80"
+    depends_on:
+      - backend
+    environment:
+      # In the container, Nginx reverse proxies /api/ to the backend
+      - VITE_API_URL=/api/v1
+
+volumes:
+  backend-data:
